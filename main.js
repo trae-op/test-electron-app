@@ -16,7 +16,8 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     }
-  })
+  });
+  //const idleTime = powerMonitor.getSystemIdleTime();
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
@@ -32,14 +33,9 @@ function createWindow () {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 
-  powerMonitor
-      .on('suspend', () => {
-        console.log('The system is going to sleep');
-        console.log('getSystemIdleTime:', powerMonitor.getSystemIdleState(10));
-      })
-      .on('resume', () => {
-        console.log('getSystemIdleTime:', powerMonitor.getSystemIdleTime());
-      })
+    setInterval(() => {
+        console.log('suspend', powerMonitor.getSystemIdleTime());
+    }, 1000);
 }
 
 // This method will be called when Electron has finished
