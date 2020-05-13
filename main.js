@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, Tray, Menu} = require('electron')
+const {app, BrowserWindow, Tray, Menu, powerMonitor} = require('electron')
 const path = require('path')
 
 const pathIcons = 'build/icons';
@@ -31,6 +31,15 @@ function createWindow () {
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
+
+  powerMonitor
+      .on('suspend', () => {
+        console.log('The system is going to sleep');
+        console.log('getSystemIdleTime:', powerMonitor.getSystemIdleState(10));
+      })
+      .on('resume', () => {
+        console.log('getSystemIdleTime:', powerMonitor.getSystemIdleTime());
+      })
 }
 
 // This method will be called when Electron has finished
